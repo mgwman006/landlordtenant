@@ -47,7 +47,6 @@ public class TenantService
         tenant.setSecondName(tenantDetails.getSecondName());
         tenant.setPhoneNumber(tenantDetails.getPhoneNumber());
         tenant.setEmailId(tenantDetails.getEmailId());
-
         return tenantRepository.save(tenant);
     }
 

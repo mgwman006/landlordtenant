@@ -28,22 +28,33 @@ public class TenantController
         return tenantService.getTenants();
     }
 
-    @RequestMapping(value="/tenant{tenantId}", method = RequestMethod.GET)
-    public Optional<Tenant> getTenant(@PathVariable(value = "tenantId") String tenantId)
+    @RequestMapping(value="/tenant", method = RequestMethod.GET)
+    public Tenant getTenant(@RequestParam(value="tenantId") String tenantId)
     {
-        return tenantService.getTenant(tenantId);
+        Tenant tenant1;
+        Optional<Tenant> optionalTenant =tenantService.getTenant(tenantId);
+        if (optionalTenant.isPresent())
+        {
+            tenant1=optionalTenant.get();
+        }
+        else
+        {
+            tenant1 = null;
+        }
+
+        return tenant1;
     }
 
-    @RequestMapping(value="/tenant/{tenantId}", method=RequestMethod.DELETE)
-    public void deleteTenant(@PathVariable(value = "tenantId") String tenantId)
+    @RequestMapping(value="/tenant", method=RequestMethod.DELETE)
+    public void deleteTenant(@RequestParam(value = "tenantId") String tenantId)
     {
         tenantService.deleteTenant(tenantId);
     }
 
-    @RequestMapping(value="/tenant/{tenantId}", method=RequestMethod.PUT)
-    public Tenant updateTenant(@PathVariable(value = "tenantId") String tenantId, @RequestBody Tenant tenantDetails)
+    @RequestMapping(value="/tenant", method=RequestMethod.PUT)
+    public Tenant updateTenant(@RequestBody Tenant tenantDetails)
     {
-        return tenantService.updateTenant(tenantId, tenantDetails);
+        return tenantService.updateTenant(tenantDetails.getTenantId(), tenantDetails);
     }
 
 

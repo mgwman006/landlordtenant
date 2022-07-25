@@ -1,17 +1,17 @@
 package com.tante.landlordtenant.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "tenant")
+@Table(name = "tenants")
 public class Tenant
 {
     @Id
     @Column(name = "tenant_id")
     private String tenantId;
+
+    @Column(name="profile_picture")
+    private String profilePicture;
 
     @Column(name = "first_name")
     private String firstName;
@@ -24,6 +24,9 @@ public class Tenant
 
     @Column(name = "email_id")
     private String emailId;
+
+    @OneToOne(mappedBy = "tenant", cascade = CascadeType.ALL)
+    Contract contract;
 
     public Tenant() {
     }
@@ -87,15 +90,23 @@ public class Tenant
         this.emailId = emailId;
     }
 
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Tenant{" +
                 "tenantId='" + tenantId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", emailId='" + emailId + '\'' +
+                ", contract=" + contract +
                 '}';
     }
 }
